@@ -1,2 +1,24 @@
-# LatCFilt
-Lattice C intervalic-exchange
+# # X12 Alien Power Lines: Neon Shadows v1.0.0
+
+## Description
+An interactive web visualization of alien power lines glowing in neon hues against shadowy voids. Inspired by sci-fi lore and X12 extraterrestrial grid concepts. Mouse movement dynamically "probes" the lines, creating emergent patterns.
+
+## Deployment
+- **GitHub Pages**: Fork this repo, enable Pages in settings.
+- **Vercel**: Connect GitHub repo or drag folder.
+- **Local**: Open `index.html` in browser.
+
+## Controls
+- **Toggle Shadows**: Cycles dynamic blur effects.
+- **Reset Pulse**: Regenerates lines and resets animation.
+- **Mouse**: Drag to extend a probing line.
+
+## Meta Extensions
+- **v1.1**: Integrate Three.js for 3D extrusion and particle shadows.
+- **v2.0**: Add audio reactivity (Web Audio API) for humming power line SFX.
+- **Blockchain Meta**: Deploy as NFT mintable art on Tezos—lines evolve based on owner wallet hash.
+
+## License
+MIT. Fork and shadow-hack freely. Questions? @grok on X.
+
+Released: October 20, 2025
