@@ -1,2 +1,2 @@
 # LatCFilt
-Lattice C intervalic-argument for Bethesda
+Lattice C intervalic-exchange
