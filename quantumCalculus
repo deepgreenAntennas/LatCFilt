@@ -1,0 +1,185 @@
+import heapq
+import math
+
+# Quantum calculus utils: q-number and q-factorial ratio
+def q_number(n, q):
+   return (1.0 - math.pow(q, n)) / (1.0 - q)
+
+def q_factorial_ratio(n, q):  # [n]_q = [n]_q! / [n-1]_q!
+   return q_number(n, q)
+
+# Generate and print conversion ratio table
+def print_quantum_table(q, max_n):
+   print(f"\n=== Quantum Calculus Conversion Ratio Table (q = {q:.3f}) ===")
+   print(f"{'n':<8} {'[n]_q Ratio':<12}")
+   print("----------------------------------------")
+   for n in range(1, max_n + 1):
+       ratio = q_factorial_ratio(n, q)
+       print(f"{n:<8} {ratio:.6f}")
+
+# Graph representation
+class AdventureGraph:
+   def __init__(self, n):
+       self.num_nodes = n
+       self.adj = [[] for _ in range(n)]  # List of lists of (to, cost)
+
+   def add_edge(self, from_, to, cost):
+       self.adj[from_].append((to, cost))
+
+   # Heuristic for A*: Extrapolated distance using quantum ratio (q-factor)
+   def heuristic(self, from_, goal, q):
+       dist = abs(from_ - goal)  # Manhattan-like distance
+       # Extrapolate with q-ratio: simulates quantum scaling for future uncertainty
+       return dist * math.pow(q, dist) * (1.0 + 0.1 * dist)  # Simple extrapolation
+
+   # A* pathfinding with extrapolation
+   def find_path(self, start, goal, q):
+       g_score = [math.inf] * self.num_nodes
+       f_score = [math.inf] * self.num_nodes
+       came_from = [-1] * self.num_nodes
+       visited = [False] * self.num_nodes
+
+       g_score[start] = 0.0
+       f_score[start] = self.heuristic(start, goal, q)
+
+       pq = []
+       heapq.heappush(pq, (f_score[start], start))
+
+       while pq:
+           _, current = heapq.heappop(pq)
+           if visited[current]:
+               continue
+           visited[current] = True
+
+           if current == goal:
+               # Reconstruct path
+               path = []
+               at = goal
+               while at != -1:
+                   path.append(at)
+                   at = came_from[at]
+               path.reverse()
+               return path
+
+           for to, cost in self.adj[current]:
+               tentative_g = g_score[current] + cost * (1.0 + to * 0.1)  # Scale by headway proxy (node id as proxy)
+               if tentative_g < g_score[to]:
+                   came_from[to] = current
+                   g_score[to] = tentative_g
+                   f_score[to] = tentative_g + self.heuristic(to, goal, q)
+                   heapq.heappush(pq, (f_score[to], to))
+
+       return []  # No path
+
+if __name__ == "__main__":
+   # Part 1: Quantum Calculus Table
+   q = 0.8  # q-parameter (0 < q < 1 for contraction)
+   max_n = 10
+   print_quantum_table(q, max_n)
+
+   # Part 2: Industrial Adventure Graph Setup
+   # Nodes: 0=Raw Materials, 1=Assembly, 2=Testing, 3=Deployment, 4=Optimization
+   graph = AdventureGraph(5)
+   graph.add_edge(0, 1, 2.0)  # Raw -> Assembly
+   graph.add_edge(1, 2, 1.5)  # Assembly -> Testing
+   graph.add_edge(0, 2, 3.0)  # Skip to Testing
+   graph.add_edge(2, 3, 1.0)
+   graph.add_edge(3, 4, 0.5)
+   graph.add_edge(1, 4, 2.5)  # Direct to Optimization
+
+   # Compute extrapolating path from start (0) to goal (4) using q for heuristics
+   path = graph.find_path(0, 4, q)
+
+   print("\n===import heapq
+import math
+
+# Quantum calculus utils: q-number and q-factorial ratio
+def q_number(n, q):
+   return (1.0 - math.pow(q, n)) / (1.0 - q)
+
+def q_factorial_ratio(n, q):  # [n]_q = [n]_q! / [n-1]_q!
+   return q_number(n, q)
+
+# Generate and print conversion ratio table
+def print_quantum_table(q, max_n):
+   print(f"\n=== Quantum Calculus Conversion Ratio Table (q = {q:.3f}) ===")
+   print(f"{'n':<8} {'[n]_q Ratio':<12}")
+   print("----------------------------------------")
+   for n in range(1, max_n + 1):
+       ratio = q_factorial_ratio(n, q)
+       print(f"{n:<8} {ratio:.6f}")
+
+# Graph representation
+class AdventureGraph:
+   def __init__(self, n):
+       self.num_nodes = n
+       self.adj = [[] for _ in range(n)]  # List of lists of (to, cost)
+
+   def add_edge(self, from_, to, cost):
+       self.adj[from_].append((to, cost))
+
+   # Heuristic for A*: Extrapolated distance using quantum ratio (q-factor)
+   def heuristic(self, from_, goal, q):
+       dist = abs(from_ - goal)  # Manhattan-like distance
+       # Extrapolate with q-ratio: simulates quantum scaling for future uncertainty
+       return dist * math.pow(q, dist) * (1.0 + 0.1 * dist)  # Simple extrapolation
+
+   # A* pathfinding with extrapolation
+   def find_path(self, start, goal, q):
+       g_score = [math.inf] * self.num_nodes
+       f_score = [math.inf] * self.num_nodes
+       came_from = [-1] * self.num_nodes
+       visited = [False] * self.num_nodes
+
+       g_score[start] = 0.0
+       f_score[start] = self.heuristic(start, goal, q)
+
+       pq = []
+       heapq.heappush(pq, (f_score[start], start))
+
+       while pq:
+           _, current = heapq.heappop(pq)
+           if visited[current]:
+               continue
+           visited[current] = True
+
+           if current == goal:
+               # Reconstruct path
+               path = []
+               at = goal
+               while at != -1:
+                   path.append(at)
+                   at = came_from[at]
+               path.reverse()
+               return path
+
+           for to, cost in self.adj[current]:
+               tentative_g = g_score[current] + cost * (1.0 + to * 0.1)  # Scale by headway proxy (node id as proxy)
+               if tentative_g < g_score[to]:
+                   came_from[to] = current
+                   g_score[to] = tentative_g
+                   f_score[to] = tentative_g + self.heuristic(to, goal, q)
+                   heapq.heappush(pq, (f_score[to], to))
+
+       return []  # No path
+
+if __name__ == "__main__":
+   # Part 1: Quantum Calculus Table
+   q = 0.8  # q-parameter (0 < q < 1 for contraction)
+   max_n = 10
+   print_quantum_table(q, max_n)
+
+   # Part 2: Industrial Adventure Graph Setup
+   # Nodes: 0=Raw Materials, 1=Assembly, 2=Testing, 3=Deployment, 4=Optimization
+   graph = AdventureGraph(5)
+   graph.add_edge(0, 1, 2.0)  # Raw -> Assembly
+   graph.add_edge(1, 2, 1.5)  # Assembly -> Testing
+   graph.add_edge(0, 2, 3.0)  # Skip to Testing
+   graph.add_edge(2, 3, 1.0)
+   graph.add_edge(3, 4, 0.5)
+   graph.add_edge(1, 4, 2.5)  # Direct to Optimization
+
+   # Compute extrapolating path from start (0) to goal (4) using q for heuristics
+   path = graph.find_path(0, 4, q)
+
+   print("\n===
